@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="132" y="76"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile-->
         <scene sceneID="rww-yN-cdt">
             <objects>
                 <viewController id="Dtk-kO-gc1" sceneMemberID="viewController">
@@ -36,7 +36,7 @@
                         <viewLayoutGuide key="safeArea" id="CU5-Mh-Yzp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Hdi-7t-cOX"/>
+                    <navigationItem key="navigationItem" title="Profile" id="Hdi-7t-cOX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KuU-4l-2Ga" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,11 +61,11 @@
             </objects>
             <point key="canvasLocation" x="1291" y="76"/>
         </scene>
-        <!--Item 1-->
+        <!--Feed-->
         <scene sceneID="NNO-CB-L15">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T9v-ga-oaR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" id="Bfp-RQ-H91"/>
+                    <tabBarItem key="tabBarItem" title="Feed" selectedImage="house.fill" catalog="system" id="Bfp-RQ-H91"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B6p-jF-RW5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -80,7 +80,7 @@
             </objects>
             <point key="canvasLocation" x="132" y="835"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Home Feed-->
         <scene sceneID="WoS-gF-MPM">
             <objects>
                 <tableViewController id="5dZ-FS-Z6r" sceneMemberID="viewController">
@@ -103,7 +103,22 @@
                             <outlet property="delegate" destination="5dZ-FS-Z6r" id="diA-qI-oh6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Q6p-l6-F2J"/>
+                    <navigationItem key="navigationItem" title="Home Feed" id="Q6p-l6-F2J">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="Nbt-8J-KbL">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="kc9-uU-Pnx">
+                                <rect key="frame" x="20" y="13" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Logout"/>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="lzl-z1-JvB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rRV-mm-zsn">
+                                <rect key="frame" x="-23" y="-15" width="79" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="insta_camera_btn"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="8VI-cl-OSk" kind="show" id="goc-m8-N5j"/>
                     </connections>
@@ -128,11 +143,11 @@
             </objects>
             <point key="canvasLocation" x="2671" y="834"/>
         </scene>
-        <!--Item 2-->
+        <!--Profile-->
         <scene sceneID="ydR-7y-xCd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bKa-al-rD0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 2" id="FFN-gq-mbt"/>
+                    <tabBarItem key="tabBarItem" title="Profile" selectedImage="person.fill" catalog="system" id="FFN-gq-mbt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HPp-JU-B8E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -168,6 +183,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="insta_camera_btn" width="25" height="25"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
