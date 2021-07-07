@@ -10,6 +10,7 @@
 		08E5A138FFA99E9A1085D3EA /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132724C9902E05267C55BD69 /* Pods_Instagram.framework */; };
 		7105D69C26951673008BEC5D /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105D69B26951673008BEC5D /* FeedViewController.m */; };
 		7105D69F26955A32008BEC5D /* CaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105D69E26955A32008BEC5D /* CaptureViewController.m */; };
+		7105D6AB2696307D008BEC5D /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 7105D6AA2696307D008BEC5D /* Post.m */; };
 		7169948A2694EE5F00050545 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 716994892694EE5F00050545 /* Keys.plist */; };
 		716994902695067100050545 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7169948F2695067100050545 /* LoginViewController.m */; };
 		71FCF6A42694E9A200B759C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FCF6A32694E9A200B759C8 /* AppDelegate.m */; };
@@ -51,6 +52,8 @@
 		7105D69B26951673008BEC5D /* FeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
 		7105D69D26955A32008BEC5D /* CaptureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureViewController.h; sourceTree = "<group>"; };
 		7105D69E26955A32008BEC5D /* CaptureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureViewController.m; sourceTree = "<group>"; };
+		7105D6A92696307D008BEC5D /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		7105D6AA2696307D008BEC5D /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		716994892694EE5F00050545 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		7169948E2695067100050545 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		7169948F2695067100050545 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 		7169948D2695060E00050545 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7105D6A92696307D008BEC5D /* Post.h */,
+				7105D6AA2696307D008BEC5D /* Post.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				7105D69C26951673008BEC5D /* FeedViewController.m in Sources */,
 				716994902695067100050545 /* LoginViewController.m in Sources */,
 				7105D69F26955A32008BEC5D /* CaptureViewController.m in Sources */,
+				7105D6AB2696307D008BEC5D /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

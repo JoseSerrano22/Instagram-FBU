@@ -11,7 +11,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" wantsFullScreenLayout="YES" id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,7 +94,7 @@
         <!--Profile-->
         <scene sceneID="rww-yN-cdt">
             <objects>
-                <viewController id="Dtk-kO-gc1" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="Dtk-kO-gc1" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EzG-Rh-Pc0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,7 +110,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="zve-jE-dda">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="mQT-Ua-QcA" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" wantsFullScreenLayout="YES" id="mQT-Ua-QcA" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="VOR-KN-cod"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6Dl-1z-cQc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -129,7 +129,7 @@
         <!--Feed-->
         <scene sceneID="NNO-CB-L15">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T9v-ga-oaR" sceneMemberID="viewController">
+                <navigationController wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="T9v-ga-oaR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" image="house.fill" catalog="system" selectedImage="house.fill" id="Bfp-RQ-H91"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B6p-jF-RW5">
@@ -145,17 +145,17 @@
             </objects>
             <point key="canvasLocation" x="132" y="835"/>
         </scene>
-        <!--Feed View Controller-->
+        <!--Home Feed-->
         <scene sceneID="yL0-Wh-aHi">
             <objects>
-                <viewController storyboardIdentifier="FeedViewController" id="EtE-db-g2W" customClass="FeedViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedViewController" wantsFullScreenLayout="YES" id="EtE-db-g2W" customClass="FeedViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iOn-Tn-rIa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="phj-kk-3YF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="i9z-W0-T29">
+                    <navigationItem key="navigationItem" title="Home Feed" id="i9z-W0-T29">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="TKo-ax-Yrw">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="BjP-u5-XMH">
                                 <rect key="frame" x="20" y="13" width="92" height="30"/>
@@ -186,28 +186,66 @@
         <!--Capture View Controller-->
         <scene sceneID="zyf-UK-m6K">
             <objects>
-                <viewController id="p9Z-qB-Viu" customClass="CaptureViewController" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="p9Z-qB-Viu" customClass="CaptureViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jJ5-OM-E1R">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="h8x-X9-feC">
-                                <rect key="frame" x="20" y="76" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a caption..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hTx-We-t1F">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Write a caption..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hTx-We-t1F">
                                 <rect key="frame" x="178" y="76" width="216" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="216" id="DtH-Pk-z47"/>
+                                    <constraint firstAttribute="height" constant="150" id="YYd-5Q-Xlc"/>
+                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="h8x-X9-feC">
+                                <rect key="frame" x="20" y="76" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Mp7-3M-DLN"/>
+                                    <constraint firstAttribute="width" constant="150" id="rye-tw-Bk6"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="p66-3c-B1r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="h8x-X9-feC" firstAttribute="leading" secondItem="p66-3c-B1r" secondAttribute="leading" constant="20" id="8Rx-aI-i8Y"/>
+                            <constraint firstItem="h8x-X9-feC" firstAttribute="top" secondItem="p66-3c-B1r" secondAttribute="top" constant="20" id="FTQ-pK-cAZ"/>
+                            <constraint firstItem="hTx-We-t1F" firstAttribute="leading" secondItem="h8x-X9-feC" secondAttribute="trailing" constant="8" id="kha-Wl-YGT"/>
+                            <constraint firstItem="hTx-We-t1F" firstAttribute="top" secondItem="p66-3c-B1r" secondAttribute="top" constant="20" id="mzL-17-8Fo"/>
+                            <constraint firstItem="p66-3c-B1r" firstAttribute="trailing" secondItem="hTx-We-t1F" secondAttribute="trailing" constant="20" id="pI9-4w-i9D"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="aOR-4U-SPY"/>
+                    <navigationItem key="navigationItem" id="aOR-4U-SPY">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="KWY-ak-0AP">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Vs6-eU-90T">
+                                <rect key="frame" x="20" y="13" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="cancel"/>
+                                <connections>
+                                    <action selector="cancelDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="sRG-MJ-Qdi"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Ixo-gb-kGl">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Blz-i9-5ad">
+                                <rect key="frame" x="302" y="13" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Post"/>
+                                <connections>
+                                    <action selector="postDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="UgO-vN-LTL"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="descriptionTextView" destination="hTx-We-t1F" id="2Qn-co-wD7"/>
+                        <outlet property="postImage" destination="h8x-X9-feC" id="1uG-Ja-e4S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SHH-te-dDv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -216,7 +254,7 @@
         <!--Profile-->
         <scene sceneID="ydR-7y-xCd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bKa-al-rD0" sceneMemberID="viewController">
+                <navigationController wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="bKa-al-rD0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" selectedImage="person.fill" id="FFN-gq-mbt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HPp-JU-B8E">
@@ -235,7 +273,7 @@
         <!--Navigation Controller-->
         <scene sceneID="qDq-LL-kmd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8VI-cl-OSk" sceneMemberID="viewController">
+                <navigationController wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="8VI-cl-OSk" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="EoD-0l-7pF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uof-el-Ja3">
