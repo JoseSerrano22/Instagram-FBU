@@ -7,7 +7,6 @@
 
 #import "AppDelegate.h"
 #import "Parse/Parse.h"
-//#import "FeedViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,14 +28,6 @@
     }];
 
     [Parse initializeWithConfiguration:config];
-    
-//    if (PFUser.currentUser) {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-////        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
-//        FeedViewController * fvc = [storyboard instantiateViewControllerWithIdentifier:@"FeedViewController"];
-//        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:fvc];
-//        [self.window makeKeyAndVisible];
-//    }
 
     return YES;
 }
