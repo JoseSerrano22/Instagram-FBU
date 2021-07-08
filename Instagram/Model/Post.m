@@ -29,6 +29,7 @@
     newPost.likeCount = @(0);
     newPost.commentCount = @(0);
     newPost.createdAt = [NSDate date];
+    newPost.likedByUsername = [NSMutableArray new];
     
     [newPost saveInBackgroundWithBlock: completion];
 }
@@ -47,6 +48,18 @@
     }
     
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
+}
+
+- (void)like {
+    [self.likedByUsername addObject:PFUser.currentUser.objectId];
+    [self setObject:self.likedByUsername forKey:@"likedByUsername"];
+    [self saveInBackground];
+}
+
+- (void)unlike {
+    [self.likedByUsername removeObject:PFUser.currentUser.objectId];
+    [self setObject:self.likedByUsername forKey:@"likedByUsername"];
+    [self saveInBackground];
 }
 
 @end

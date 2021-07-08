@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 
 @property (strong, nonatomic) Post *post;
 

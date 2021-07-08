@@ -28,8 +28,8 @@
     //                cell.profileImage.image = [UIImage imageWithData:data];
     //            }
     //        }];
-            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
-            self.profileImage.clipsToBounds = YES;
+    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
+    self.profileImage.clipsToBounds = YES;
     
     [post.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
         if (!error) {
@@ -39,10 +39,10 @@
     
     self.descriptionLabel.text = post.caption;
     self.usernameLabel.text = post.author.username;
-    NSString *commentCountString = [post.commentCount stringValue];
-    [self.commentButton setTitle:commentCountString forState:UIControlStateNormal];
-    NSString *likeCountString = [post.likeCount stringValue];
-    [self.favoriteButton setTitle:likeCountString forState:UIControlStateNormal];
+    
+    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%@", self.post.likeCount];
+    self.commentCountLabel.text = [NSString stringWithFormat:@"%@", self.post.commentCount];
+    self.favoriteButton.selected = [self.post.likedByUsername containsObject:PFUser.currentUser.objectId];
     
     NSString *createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -52,7 +52,7 @@
     NSDate *date = [formatter dateFromString:createdAtOriginalString];
     NSDate *now = [NSDate date];
     NSInteger timeApart = [now hoursFrom:date];
-
+    
     if (timeApart >= 24) {
         formatter.dateStyle = NSDateFormatterShortStyle;
         formatter.timeStyle = NSDateFormatterNoStyle;
@@ -61,58 +61,27 @@
     else {
         self.timestampLabel.text = date.shortTimeAgoSinceNow;
     }
-    
-    if ([post.likeCount intValue] >= 1) {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"heart.fill"] forState:UIControlStateNormal];
-    }
-    else if ([post.likeCount intValue] == 0) {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-    }
 }
 
 - (IBAction)didTapFavorite:(id)sender {
-    
     if(self.favoriteButton.selected){
         self.favoriteButton.selected = false;
-        [self.favoriteButton setImage:[UIImage imageNamed:@"heart"] forState: UIControlStateNormal];
+        [self.favoriteButton setSelected:NO];
         self.post.likeCount = [NSNumber numberWithInteger:([self.post.likeCount intValue] - 1)];
-        [self.post saveInBackground];
+        [self.post unlike];
         
     } else if(!self.favoriteButton.selected) {
         self.favoriteButton.selected = true;
-        [self.favoriteButton setImage:[UIImage imageNamed:@"heart.fill"] forState: UIControlStateNormal];
+        [self.favoriteButton setSelected:YES];
         self.post.likeCount = [NSNumber numberWithInteger:([self.post.likeCount intValue] + 1)];
-        [self.post saveInBackground];
+//        [self.post addUniqueObject:PFUser.currentUser.objectId forKey:@"likedBy"];
+        if(!self.post.likedByUsername) {
+            self.post.likedByUsername = [NSMutableArray new];
+        }
+        [self.post like];
     }
-    NSString *numString = [NSString stringWithFormat:@"%@", self.post.likeCount];
-    [sender setTitle:numString forState:UIControlStateNormal];
+    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%@", self.post.likeCount];
     
-    
-    //    if ([self.post.likeCount intValue] == 0) {
-    //
-    //        NSNumber *number = self.post.likeCount;
-    //        NSString *numString;
-    //        int value = [number intValue];
-    //        number = [NSNumber numberWithInt:value + 1];
-    //        numString = [NSString stringWithFormat:@"%@", number];
-    //        [sender setTitle:numString forState:UIControlStateNormal];
-    //        [self.favoriteButton setImage:[UIImage imageNamed:@"heart.fill"] forState: UIControlStateNormal];
-    //        [self.post setValue:number forKey:@"likeCount"];
-    //        [self.post saveInBackground];
-    //    }
-    //
-    //     else if ([self.post.likeCount intValue] >= 1) {
-    //
-    //         NSNumber *number = [NSNumber numberWithInt:[self.post.likeCount intValue]];
-    //         NSString *numString;
-    //         int value = [self.post.likeCount intValue];
-    //         number = [NSNumber numberWithInt:value - 1];
-    //         numString = [NSString stringWithFormat:@"%@", number];
-    //         [sender setTitle:numString forState:UIControlStateNormal];
-    //         [self.favoriteButton setImage:[UIImage imageNamed:@"heart"] forState: UIControlStateNormal];
-    //         [self.post setValue:number forKey:@"likeCount"];
-    //         [self.post saveInBackground];
-    //     }
 }
 
 @end
