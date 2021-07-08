@@ -81,8 +81,8 @@
     //                cell.profileImage.image = [UIImage imageWithData:data];
     //            }
     //        }];
-    //        cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width / 2;
-    //        cell.profileImage.clipsToBounds = YES;
+            cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width / 2;
+            cell.profileImage.clipsToBounds = YES;
     
     [post.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
         if (!error) {
