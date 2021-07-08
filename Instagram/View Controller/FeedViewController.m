@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "Post.h"
 #import "PostCell.h"
-#import "DateTools.h"
+
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -47,7 +47,6 @@
 }
 
 - (void)fetchPosts {
-    // construct PFQuery
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
     [postQuery includeKey:@"author"];
@@ -75,54 +74,11 @@
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
     Post *post = self.posts[indexPath.row];
     cell.post = post;
-    
-    //    [post.author[@"profileImage"] getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
-    //            if (!error) {
-    //                cell.profileImage.image = [UIImage imageWithData:data];
-    //            }
-    //        }];
-            cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width / 2;
-            cell.profileImage.clipsToBounds = YES;
-    
-    [post.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
-        if (!error) {
-            cell.postImage.image = [UIImage imageWithData:data];
-        }
-    }];
-    
-    cell.descriptionLabel.text = post.caption;
-    cell.usernameLabel.text = post.author.username;
-    NSString *commentCountString = [post.commentCount stringValue];
-    [cell.commentButton setTitle:commentCountString forState:UIControlStateNormal];
-    NSString *likeCountString = [post.likeCount stringValue];
-    [cell.favoriteButton setTitle:likeCountString forState:UIControlStateNormal];
-    
-    NSString *createdAtOriginalString = cell.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    // Configure the input format to parse the date string
-    formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
-    // Convert String to Date
-    NSDate *date = [formatter dateFromString:createdAtOriginalString];
-    NSDate *now = [NSDate date];
-    NSInteger timeApart = [now hoursFrom:date];
-
-    if (timeApart >= 24) {
-        formatter.dateStyle = NSDateFormatterShortStyle;
-        formatter.timeStyle = NSDateFormatterNoStyle;
-        cell.timestampLabel.text = [formatter stringFromDate:date];
-    }
-    else {
-        cell.timestampLabel.text = date.shortTimeAgoSinceNow;
-    }
-    
-    if ([post.likeCount intValue] >= 1) {
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"heart.fill"] forState:UIControlStateNormal];
-    }
-    else if ([post.likeCount intValue] == 0) {
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
-    }
-    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 /*
