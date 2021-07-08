@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Post.h"
 #import "PostCell.h"
+#import "DateTools.h"
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -96,23 +97,23 @@
     NSString *likeCountString = [post.likeCount stringValue];
     [cell.favoriteButton setTitle:likeCountString forState:UIControlStateNormal];
     
-//    NSString *createdAtOriginalString = cell.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    // Configure the input format to parse the date string
-//    formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
-//    // Convert String to Date
-//    NSDate *date = [formatter dateFromString:createdAtOriginalString];
-//    NSDate *now = [NSDate date];
-//    NSInteger timeApart = [now hoursFrom:date];
-//
-//    if (timeApart >= 24) {
-//        formatter.dateStyle = NSDateFormatterShortStyle;
-//        formatter.timeStyle = NSDateFormatterNoStyle;
-//        cell.timestampLabel.text = [formatter stringFromDate:date];
-//    }
-//    else {
-//        cell.timestampLabel.text = date.shortTimeAgoSinceNow;
-//    }
+    NSString *createdAtOriginalString = cell.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    // Configure the input format to parse the date string
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
+    // Convert String to Date
+    NSDate *date = [formatter dateFromString:createdAtOriginalString];
+    NSDate *now = [NSDate date];
+    NSInteger timeApart = [now hoursFrom:date];
+
+    if (timeApart >= 24) {
+        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.timeStyle = NSDateFormatterNoStyle;
+        cell.timestampLabel.text = [formatter stringFromDate:date];
+    }
+    else {
+        cell.timestampLabel.text = date.shortTimeAgoSinceNow;
+    }
     
     if ([post.likeCount intValue] >= 1) {
         [cell.favoriteButton setImage:[UIImage imageNamed:@"heart.fill"] forState:UIControlStateNormal];
