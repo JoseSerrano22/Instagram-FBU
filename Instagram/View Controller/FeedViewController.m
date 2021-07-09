@@ -14,12 +14,13 @@
 #import "DetailsViewController.h"
 
 
-@interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface FeedViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *posts;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-
+@property (nonatomic) BOOL isMoreDataLoading;
+@property (nonatomic) int skipCount;
 @end
 
 @implementation FeedViewController
@@ -31,6 +32,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.skipCount = 2;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
@@ -79,7 +81,46 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(!self.isMoreDataLoading){
+        // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.tableView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.tableView.bounds.size.height;
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tableView.isDragging) {
+            self.isMoreDataLoading = true;
+            [self loadMoreData];
+        }
+    }
+}
+
+- (void)loadMoreData {
+    // construct query
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    //[query whereKey:@"likesCount" greaterThan:@100];
+    
+    query.limit = 20 * self.skipCount;
+    [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+        if (posts != nil) {
+            // do something with the array of object returned by the call
+            self.isMoreDataLoading = false;
+            self.posts = (NSMutableArray *) posts;
+            NSLog(@"Posts added to array");
+            [self.tableView reloadData];
+            // Tell the refreshControl to stop spinning
+            
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+    self.skipCount++;
 }
 
 

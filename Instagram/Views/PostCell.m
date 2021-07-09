@@ -28,6 +28,15 @@
     //                cell.profileImage.image = [UIImage imageWithData:data];
     //            }
     //        }];
+    
+    PFUser *currentUser = PFUser.currentUser;
+    [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        self.usernameLabel.text = [currentUser username];
+        PFFileObject *image = currentUser[@"profile_image"];
+        NSURL *url = [NSURL URLWithString:image.url];
+        [self.profileImage setImageWithURL:url];
+    }];
+    
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
     
