@@ -32,7 +32,7 @@
         self.bioField.text = user[@"bio"];
     }];
     
-    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width/2;
+    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 3;
     self.profileImage.clipsToBounds = YES;
     
     self.profileImage.userInteractionEnabled = YES;
@@ -45,7 +45,7 @@
 }
 
 - (IBAction)saveDidTap:(id)sender {
-    UIImage *resizeImage = [self resizeImage:self.profileImage.image withSize:CGSizeMake(400, 400)];
+    UIImage *resizeImage = [self resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
     NSData *data = UIImagePNGRepresentation(resizeImage);
     PFFileObject *image = [PFFileObject fileObjectWithName:@"image.png" data:data];
     PFUser *user = [PFUser currentUser];
