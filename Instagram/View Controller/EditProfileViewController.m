@@ -11,7 +11,7 @@
 
 #import "Post.h"
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *bioField;
@@ -22,6 +22,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.usernameField.delegate = self;
+    self.bioField.delegate = self;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
     
     PFUser *user = [PFUser currentUser];
     [user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -45,26 +51,33 @@
 }
 
 - (IBAction)saveDidTap:(id)sender {
-    UIImage *resizeImage = [self resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
-    NSData *data = UIImagePNGRepresentation(resizeImage);
-    PFFileObject *image = [PFFileObject fileObjectWithName:@"image.png" data:data];
-    PFUser *user = [PFUser currentUser];
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        user[@"profile_image"] = image;
-        [user saveInBackground];
-    }];
-    //    PFUser.currentUser[@"profile_image"] = [PFFileObject fileObjectWithData:UIImagePNGRepresentation(self.profileImage.image)];
-    PFUser.currentUser[@"username"] = self.usernameField.text;
-    PFUser.currentUser[@"bio"] = self.bioField.text;
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [PFUser.currentUser saveInBackground];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+
+    if (![self isTextFieldEmpty]){
+        UIImage *resizeImage = [self resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
+        NSData *data = UIImagePNGRepresentation(resizeImage);
+        PFFileObject *image = [PFFileObject fileObjectWithName:@"image.png" data:data];
+        PFUser *user = [PFUser currentUser];
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            user[@"profile_image"] = image;
+            [user saveInBackground];
+        }];
+        //    PFUser.currentUser[@"profile_image"] = [PFFileObject fileObjectWithData:UIImagePNGRepresentation(self.profileImage.image)];
+        PFUser.currentUser[@"username"] = self.usernameField.text;
+        PFUser.currentUser[@"bio"] = self.bioField.text;
+        [PFUser.currentUser saveInBackground];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+
 }
 
 -(void)dismissKeyboard {
-    [self.usernameField endEditing:YES];
-    [self.bioField endEditing:YES];
+    [self.usernameField resignFirstResponder];
+    [self.bioField resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 
@@ -149,6 +162,43 @@
     }
     
     return YES;
+}
+
+- (BOOL)isTextFieldEmpty {
+    
+    BOOL flag = FALSE;
+    
+    if ([self.usernameField.text isEqual:@""]) {
+        UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
+                                                                       message:@"Is empty the username"
+                                                                preferredStyle:(UIAlertControllerStyleAlert)];
+        // create a cancel action
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+            // handle cancel response here. Doing nothing will dismiss the view.
+        }];
+        // add the cancel action to the alertController
+        [usernameAlert addAction:cancelAction];
+        
+        // create an OK action
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+            // handle response here.
+        }];
+        // add the OK action to the alert controller
+        [usernameAlert addAction:okAction];
+        
+        [self presentViewController:usernameAlert animated:YES completion:^{
+            // optional code for what happens after the alert controller has finished presenting
+        }];
+        
+        flag = TRUE;
+        
+    }
+    
+    return flag;
 }
 
 //- (void)viewDidAppear:(BOOL)animated {

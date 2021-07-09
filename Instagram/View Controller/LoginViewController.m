@@ -11,11 +11,9 @@
 @interface LoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-
 @end
 
 @implementation LoginViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -26,7 +24,7 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (IBAction)signUpDidTap:(id)sender {
+- (IBAction)_signUpDidTap:(id)sender {
     if (![self isTextFieldEmpty]){
         [self registerUser];
     }

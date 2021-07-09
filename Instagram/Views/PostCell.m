@@ -29,13 +29,14 @@
     //            }
     //        }];
     
-    PFUser *currentUser = PFUser.currentUser;
-    [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        self.usernameLabel.text = [currentUser username];
-        PFFileObject *image = currentUser[@"profile_image"];
+    PFUser *postAuthor = self.post.author;
+    [postAuthor fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        PFFileObject *image = postAuthor[@"profile_image"];
         NSURL *url = [NSURL URLWithString:image.url];
         [self.profileImage setImageWithURL:url];
     }];
+    
+    self.usernameLabel.text = post.author.username;
     
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
