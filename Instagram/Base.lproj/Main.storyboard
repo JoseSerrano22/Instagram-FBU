@@ -275,7 +275,7 @@
                                             <outlet property="profileImage" destination="cnt-g6-EjB" id="nZr-yj-ZZf"/>
                                             <outlet property="timestampLabel" destination="oI7-om-1Qn" id="Q4y-uG-WyM"/>
                                             <outlet property="usernameLabel" destination="qAY-EP-wew" id="JSI-M7-2MA"/>
-                                            <segue destination="rQN-AL-XoD" kind="presentation" id="xA5-WS-b8i"/>
+                                            <segue destination="rQN-AL-XoD" kind="presentation" identifier="detailsSegue" id="xA5-WS-b8i"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -400,6 +400,10 @@
                                 <state key="normal" image="heart" catalog="system">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <state key="selected" image="heart.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="didTapFavorite:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="9Be-Cc-O5L"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpP-vA-S3z">
                                 <rect key="frame" x="370" y="537" width="24" height="24"/>
@@ -446,9 +450,23 @@
                                 <rect key="frame" x="20" y="7" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backDidTap:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="dUm-U0-we6"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="commentButton" destination="byg-Fj-vOb" id="tf9-V1-1Qf"/>
+                        <outlet property="commentCountLabel" destination="HXW-HK-jPg" id="EGb-u5-IUt"/>
+                        <outlet property="descriptionLabel" destination="tGf-vr-eXo" id="n7y-X3-Vdj"/>
+                        <outlet property="favoriteButton" destination="XQa-Mf-8qp" id="dBo-GN-M5s"/>
+                        <outlet property="favoriteCountLabel" destination="Dd1-Q1-2xQ" id="ElK-z8-vhJ"/>
+                        <outlet property="postImage" destination="2Ja-n5-V5B" id="j4F-8w-d0f"/>
+                        <outlet property="profileImage" destination="QxZ-Ia-4bA" id="RJp-V4-UXd"/>
+                        <outlet property="timestampLabel" destination="Y2j-x3-6sT" id="6QP-2D-hMf"/>
+                        <outlet property="usernameLabel" destination="bb7-b2-yNJ" id="yZZ-lp-dqM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gsz-9J-7bZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

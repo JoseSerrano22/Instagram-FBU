@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Post.h"
 #import "PostCell.h"
+#import "DetailsViewController.h"
 
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -78,17 +79,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    //[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
+#pragma mark - Navigation
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"detailsSegue"]){
+        PostCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Post *post = self.posts[indexPath.row];
+        UINavigationController *nav = [segue destinationViewController];
+        DetailsViewController *detailsViewController = (DetailsViewController *)[nav topViewController];
+        detailsViewController.post = post;
+    }
+}
 
 @end
