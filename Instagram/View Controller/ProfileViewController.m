@@ -22,18 +22,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfPostLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bioLabel;
 
-
 @end
 
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    [self fetchPosts];
+    [self _fetchPosts];
     
     PFUser *currentUser = PFUser.currentUser;
     [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -45,25 +43,25 @@
         self.bioLabel.text = currentUser[@"bio"];
     }];
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
-    [self.collectionView insertSubview:self.refreshControl atIndex:0];
-    
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(_fetchPosts) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView insertSubview:self.refreshControl atIndex:0];
+    
 }
 
-- (void)fetchPosts {
-    // construct query
+- (void)_fetchPosts {
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
     [query whereKey:@"author" equalTo:[PFUser currentUser]];
-    // fetch data asynchronously
+
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts != nil) {
-            // do something with the array of object returned by the call
+
             self.posts = (NSMutableArray *) posts;
             NSLog(@"Posts assigned to array");
             
@@ -90,6 +88,8 @@
     }];
 }
 
+#pragma mark - UICollectionViewDelegate
+
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PostCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionCell" forIndexPath:indexPath];
     cell.post = self.posts[indexPath.item];
@@ -100,25 +100,5 @@
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.posts.count;
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    PFUser *currentUser = PFUser.currentUser;
-//    [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-//        self.usernameLabel.text = [currentUser username];
-//
-//        PFFileObject *image = currentUser[@"profile_image"];
-//        NSURL *url = [NSURL URLWithString:image.url];
-//        [self.profileImage setImageWithURL:url];
-//    }];
-//}
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

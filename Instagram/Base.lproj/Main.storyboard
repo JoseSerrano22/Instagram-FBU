@@ -54,7 +54,7 @@
                                 </constraints>
                                 <state key="normal" title="Log In"/>
                                 <connections>
-                                    <action selector="logInDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1PA-gE-sjT"/>
+                                    <action selector="_logInDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1PA-gE-sjT"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="595-vO-vpj">
@@ -405,7 +405,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log Out"/>
                                 <connections>
-                                    <action selector="logOutDidTap:" destination="EtE-db-g2W" eventType="touchUpInside" id="lP9-wg-fBV"/>
+                                    <action selector="_logOutDidTap:" destination="EtE-db-g2W" eventType="touchUpInside" id="lP9-wg-fBV"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -510,7 +510,7 @@
                                 </state>
                                 <state key="selected" image="heart.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="didTapFavorite:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="9Be-Cc-O5L"/>
+                                    <action selector="_didTapFavorite:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="9Be-Cc-O5L"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpP-vA-S3z">
@@ -559,7 +559,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <action selector="backDidTap:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="dUm-U0-we6"/>
+                                    <action selector="_backDidTap:" destination="vaB-wr-Fg1" eventType="touchUpInside" id="dUm-U0-we6"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -624,7 +624,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <action selector="cancelDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="sRG-MJ-Qdi"/>
+                                    <action selector="_cancelDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="sRG-MJ-Qdi"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -634,7 +634,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Post"/>
                                 <connections>
-                                    <action selector="postDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="UgO-vN-LTL"/>
+                                    <action selector="_postDidTap:" destination="p9Z-qB-Viu" eventType="touchUpInside" id="UgO-vN-LTL"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -751,7 +751,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="cancel"/>
                                 <connections>
-                                    <action selector="cancelDidTap:" destination="eHg-Yn-PVu" eventType="touchUpInside" id="MpZ-BD-GT9"/>
+                                    <action selector="_cancelDidTap:" destination="eHg-Yn-PVu" eventType="touchUpInside" id="MpZ-BD-GT9"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -761,7 +761,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="save"/>
                                 <connections>
-                                    <action selector="saveDidTap:" destination="eHg-Yn-PVu" eventType="touchUpInside" id="uIt-vx-T7h"/>
+                                    <action selector="_saveDidTap:" destination="eHg-Yn-PVu" eventType="touchUpInside" id="uIt-vx-T7h"/>
                                 </connections>
                             </button>
                         </barButtonItem>

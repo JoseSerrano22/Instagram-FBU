@@ -8,10 +8,9 @@
 #import "EditProfileViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import <Parse/Parse.h>
-
 #import "Post.h"
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextFieldDelegate>
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *bioField;
@@ -26,7 +25,7 @@
     self.usernameField.delegate = self;
     self.bioField.delegate = self;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
     PFUser *user = [PFUser currentUser];
@@ -42,18 +41,21 @@
     self.profileImage.clipsToBounds = YES;
     
     self.profileImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapImageGesture:)];
+    UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(_tapImageGesture:)];
     tapGesture1.numberOfTapsRequired = 1;
     [self.profileImage addGestureRecognizer:tapGesture1];
 }
-- (IBAction)cancelDidTap:(id)sender {
+
+#pragma mark - Private
+
+- (IBAction)_cancelDidTap:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)saveDidTap:(id)sender {
-
-    if (![self isTextFieldEmpty]){
-        UIImage *resizeImage = [self resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
+- (IBAction)_saveDidTap:(id)sender {
+    
+    if (![self _isTextFieldEmpty]){
+        UIImage *resizeImage = [self _resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
         NSData *data = UIImagePNGRepresentation(resizeImage);
         PFFileObject *image = [PFFileObject fileObjectWithName:@"image.png" data:data];
         PFUser *user = [PFUser currentUser];
@@ -61,27 +63,14 @@
             user[@"profile_image"] = image;
             [user saveInBackground];
         }];
-        //    PFUser.currentUser[@"profile_image"] = [PFFileObject fileObjectWithData:UIImagePNGRepresentation(self.profileImage.image)];
         PFUser.currentUser[@"username"] = self.usernameField.text;
         PFUser.currentUser[@"bio"] = self.bioField.text;
         [PFUser.currentUser saveInBackground];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-
 }
 
--(void)dismissKeyboard {
-    [self.usernameField resignFirstResponder];
-    [self.bioField resignFirstResponder];
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
-}
-
-
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+- (UIImage *)_resizeImage:(UIImage *)image withSize:(CGSize)size {
     UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -95,7 +84,7 @@
     return newImage;
 }
 
-- (void) tapImageGesture: (id)sender {
+- (void)_tapImageGesture: (id)sender {
     
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
@@ -104,11 +93,9 @@
     UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Choose"
                                                                            message:@""
                                                                     preferredStyle:(UIAlertControllerStyleAlert)];
-    // create a take photo action
     UIAlertAction *takePhotoAction = [UIAlertAction actionWithTitle:@"Take Photo"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-        // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
         }
@@ -116,42 +103,56 @@
             NSLog(@"Camera 🚫 available so we will use photo library instead");
             imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         }
-        
         [self presentViewController:imagePickerVC animated:YES completion:nil];
-        
     }];
-    // add the cancel action to the alertController
     [usernameAlert addAction:takePhotoAction];
-    
-    // create an OK action
     UIAlertAction *cameraRollAction = [UIAlertAction actionWithTitle:@"Camera Roll"
                                                                style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * _Nonnull action) {
-        
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
-        // handle response here.
     }];
-    // add the OK action to the alert controller
     [usernameAlert addAction:cameraRollAction];
-    
     [self presentViewController:usernameAlert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
     }];
-    
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+-(void)_dismissKeyboard {
+    [self.usernameField resignFirstResponder];
+    [self.bioField resignFirstResponder];
+}
+
+- (BOOL)_isTextFieldEmpty {
     
-    // Get the image captured by the UIImagePickerController
-    //    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    BOOL flag = FALSE;
     
-    // Do something with the images (based on your use case)
-    self.profileImage.image = editedImage;
-    
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.usernameField.text isEqual:@""]) {
+        UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
+                                                                               message:@"Is empty the username"
+                                                                        preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [usernameAlert addAction:cancelAction];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [usernameAlert addAction:okAction];
+        [self presentViewController:usernameAlert animated:YES completion:^{
+        }];
+        
+        flag = TRUE;
+    }
+    return flag;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -160,66 +161,16 @@
         [textView resignFirstResponder];
         return NO;
     }
-    
     return YES;
 }
 
-- (BOOL)isTextFieldEmpty {
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    BOOL flag = FALSE;
-    
-    if ([self.usernameField.text isEqual:@""]) {
-        UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
-                                                                       message:@"Is empty the username"
-                                                                preferredStyle:(UIAlertControllerStyleAlert)];
-        // create a cancel action
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:^(UIAlertAction * _Nonnull action) {
-            // handle cancel response here. Doing nothing will dismiss the view.
-        }];
-        // add the cancel action to the alertController
-        [usernameAlert addAction:cancelAction];
-        
-        // create an OK action
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-            // handle response here.
-        }];
-        // add the OK action to the alert controller
-        [usernameAlert addAction:okAction];
-        
-        [self presentViewController:usernameAlert animated:YES completion:^{
-            // optional code for what happens after the alert controller has finished presenting
-        }];
-        
-        flag = TRUE;
-        
-    }
-    
-    return flag;
+    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    self.profileImage.image = editedImage;
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    PFUser *user = [PFUser currentUser];
-//    [user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-//        PFFileObject *image = user[@"profile_image"];
-//        NSURL *url = [NSURL URLWithString:image.url];
-//        [self.profileImage setImageWithURL:url];
-//        self.usernameField.text = user.username;
-//        self.bioField.text = user[@"bio"];
-//    }];
-//}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

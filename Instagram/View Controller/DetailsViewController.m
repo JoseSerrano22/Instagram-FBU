@@ -5,6 +5,7 @@
 //  Created by jose1009 on 7/8/21.
 //
 #import "DetailsViewController.h"
+#import "UIImageView+AFNetworking.h"
 #import "DateTools.h"
 
 @interface DetailsViewController ()
@@ -23,7 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     NSLog(@"%@",self.post);
     PFUser *user = self.post.author;
     
@@ -32,6 +32,12 @@
     
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
+    PFUser *postAuthor = self.post.author;
+    [postAuthor fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        PFFileObject *image = postAuthor[@"profile_image"];
+        NSURL *url = [NSURL URLWithString:image.url];
+        [self.profileImage setImageWithURL:url];
+    }];
     
     [self.post.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
         if (!error) {
@@ -45,9 +51,9 @@
     
     NSString *createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", self.post.createdAt];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    // Configure the input format to parse the date string
+    
     formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
-    // Convert String to Date
+    
     NSDate *date = [formatter dateFromString:createdAtOriginalString];
     NSDate *now = [NSDate date];
     NSInteger timeApart = [now hoursFrom:date];
@@ -61,11 +67,13 @@
         self.timestampLabel.text = date.shortTimeAgoSinceNow;
     }
 }
-- (IBAction)backDidTap:(id)sender {
+
+#pragma mark - Private
+- (IBAction)_backDidTap:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)didTapFavorite:(id)sender {
+- (IBAction)_didTapFavorite:(id)sender {
     if(self.favoriteButton.selected){
         self.favoriteButton.selected = false;
         [self.favoriteButton setSelected:NO];
@@ -76,7 +84,7 @@
         self.favoriteButton.selected = true;
         [self.favoriteButton setSelected:YES];
         self.post.likeCount = [NSNumber numberWithInteger:([self.post.likeCount intValue] + 1)];
-//        [self.post addUniqueObject:PFUser.currentUser.objectId forKey:@"likedBy"];
+        
         if(!self.post.likedByUsername) {
             self.post.likedByUsername = [NSMutableArray new];
         }
@@ -85,15 +93,5 @@
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%@", self.post.likeCount];
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
