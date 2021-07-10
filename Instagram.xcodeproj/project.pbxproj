@@ -20,7 +20,6 @@
 		71C9CD782698E0C200E013C6 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C9CD772698E0C200E013C6 /* EditProfileViewController.m */; };
 		71FCF6A42694E9A200B759C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FCF6A32694E9A200B759C8 /* AppDelegate.m */; };
 		71FCF6A72694E9A200B759C8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FCF6A62694E9A200B759C8 /* SceneDelegate.m */; };
-		71FCF6AA2694E9A200B759C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FCF6A92694E9A200B759C8 /* ViewController.m */; };
 		71FCF6AD2694E9A200B759C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71FCF6AB2694E9A200B759C8 /* Main.storyboard */; };
 		71FCF6AF2694E9A300B759C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71FCF6AE2694E9A300B759C8 /* Assets.xcassets */; };
 		71FCF6B22694E9A300B759C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71FCF6B02694E9A300B759C8 /* LaunchScreen.storyboard */; };
@@ -77,8 +76,6 @@
 		71FCF6A32694E9A200B759C8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		71FCF6A52694E9A200B759C8 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		71FCF6A62694E9A200B759C8 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		71FCF6A82694E9A200B759C8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		71FCF6A92694E9A200B759C8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		71FCF6AC2694E9A200B759C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		71FCF6AE2694E9A300B759C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71FCF6B12694E9A300B759C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -196,8 +193,6 @@
 				71FCF6A32694E9A200B759C8 /* AppDelegate.m */,
 				71FCF6A52694E9A200B759C8 /* SceneDelegate.h */,
 				71FCF6A62694E9A200B759C8 /* SceneDelegate.m */,
-				71FCF6A82694E9A200B759C8 /* ViewController.h */,
-				71FCF6A92694E9A200B759C8 /* ViewController.m */,
 				71FCF6AB2694E9A200B759C8 /* Main.storyboard */,
 				71FCF6AE2694E9A300B759C8 /* Assets.xcassets */,
 				71FCF6B02694E9A300B759C8 /* LaunchScreen.storyboard */,
@@ -487,7 +482,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71FCF6AA2694E9A200B759C8 /* ViewController.m in Sources */,
 				71C9CD6F2697A05E00E013C6 /* DetailsViewController.m in Sources */,
 				71FCF6A42694E9A200B759C8 /* AppDelegate.m in Sources */,
 				71FCF6B52694E9A300B759C8 /* main.m in Sources */,
