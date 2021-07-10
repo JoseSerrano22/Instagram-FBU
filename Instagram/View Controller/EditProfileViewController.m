@@ -11,9 +11,9 @@
 #import "Post.h"
 
 @interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-@property (weak, nonatomic) IBOutlet UITextField *usernameField;
-@property (weak, nonatomic) IBOutlet UITextField *bioField;
+@property (weak, nonatomic) IBOutlet UIImageView *const profileImage;
+@property (weak, nonatomic) IBOutlet UITextField *const usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *const bioField;
 
 @end
 
@@ -25,13 +25,13 @@
     self.usernameField.delegate = self;
     self.bioField.delegate = self;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismissKeyboard)];
+    UITapGestureRecognizer *const tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
-    PFUser *user = [PFUser currentUser];
+    PFUser *const user = [PFUser currentUser];
     [user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        PFFileObject *image = user[@"profile_image"];
-        NSURL *url = [NSURL URLWithString:image.url];
+        PFFileObject *const image = user[@"profile_image"];
+        NSURL *const url = [NSURL URLWithString:image.url];
         [self.profileImage setImageWithURL:url];
         self.usernameField.text = user.username;
         self.bioField.text = user[@"bio"];
@@ -41,7 +41,7 @@
     self.profileImage.clipsToBounds = YES;
     
     self.profileImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(_tapImageGesture:)];
+    UITapGestureRecognizer *const tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(_tapImageGesture:)];
     tapGesture1.numberOfTapsRequired = 1;
     [self.profileImage addGestureRecognizer:tapGesture1];
 }
@@ -55,10 +55,10 @@
 - (IBAction)_saveDidTap:(id)sender {
     
     if (![self _isTextFieldEmpty]){
-        UIImage *resizeImage = [self _resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
-        NSData *data = UIImagePNGRepresentation(resizeImage);
-        PFFileObject *image = [PFFileObject fileObjectWithName:@"image.png" data:data];
-        PFUser *user = [PFUser currentUser];
+        UIImage *const resizeImage = [self _resizeImage:self.profileImage.image withSize:CGSizeMake(200, 200)];
+        NSData *const data = UIImagePNGRepresentation(resizeImage);
+        PFFileObject *const image = [PFFileObject fileObjectWithName:@"image.png" data:data];
+        PFUser *const user = [PFUser currentUser];
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             user[@"profile_image"] = image;
             [user saveInBackground];
@@ -71,14 +71,14 @@
 }
 
 - (UIImage *)_resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    UIImageView *const resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
     resizeImageView.image = image;
     
     UIGraphicsBeginImageContext(size);
     [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *const newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     return newImage;
@@ -86,14 +86,14 @@
 
 - (void)_tapImageGesture: (id)sender {
     
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    UIImagePickerController *const imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
     
-    UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Choose"
+    UIAlertController *const usernameAlert = [UIAlertController alertControllerWithTitle:@"Choose"
                                                                            message:@""
                                                                     preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *takePhotoAction = [UIAlertAction actionWithTitle:@"Take Photo"
+    UIAlertAction *const takePhotoAction = [UIAlertAction actionWithTitle:@"Take Photo"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -127,15 +127,15 @@
     BOOL flag = FALSE;
     
     if ([self.usernameField.text isEqual:@""]) {
-        UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
+        UIAlertController *const usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
                                                                                message:@"Is empty the username"
                                                                         preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+        UIAlertAction *const cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * _Nonnull action) {
         }];
         [usernameAlert addAction:cancelAction];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+        UIAlertAction *const okAction = [UIAlertAction actionWithTitle:@"OK"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
         }];
@@ -168,7 +168,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    UIImage *const editedImage = info[UIImagePickerControllerEditedImage];
     self.profileImage.image = editedImage;
     [self dismissViewControllerAnimated:YES completion:nil];
 }

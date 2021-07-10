@@ -9,8 +9,8 @@
 #import "Parse/Parse.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *usernameField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UITextField *const usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *const passwordField;
 @end
 
 @implementation LoginViewController
@@ -21,7 +21,7 @@
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismissKeyboard)];
+    UITapGestureRecognizer *const tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 }
 
@@ -40,7 +40,7 @@
 }
 
 - (void)_registerUser {
-    PFUser *newUser = [PFUser user];
+    PFUser *const newUser = [PFUser user];
     newUser.username = self.usernameField.text;
     newUser.password = self.passwordField.text;
     
@@ -55,8 +55,8 @@
 }
 
 - (void)_loginUser {
-    NSString *username = self.usernameField.text;
-    NSString *password = self.passwordField.text;
+    NSString *const username = self.usernameField.text;
+    NSString *const password = self.passwordField.text;
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
@@ -78,15 +78,15 @@
     BOOL flag = FALSE;
     
     if ([self.usernameField.text isEqual:@""]) {
-        UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
+        UIAlertController *const usernameAlert = [UIAlertController alertControllerWithTitle:@"Title"
                                                                                message:@"Is empty the username"
                                                                         preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+        UIAlertAction *const cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * _Nonnull action) {
         }];
         [usernameAlert addAction:cancelAction];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+        UIAlertAction *const okAction = [UIAlertAction actionWithTitle:@"OK"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
         }];
@@ -98,15 +98,15 @@
         
     }
     else if ([self.passwordField.text isEqual:@""]){
-        UIAlertController *passwordAlert = [UIAlertController alertControllerWithTitle:@"Title"
+        UIAlertController *const passwordAlert = [UIAlertController alertControllerWithTitle:@"Title"
                                                                                message:@"Is empty the password"
                                                                         preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+        UIAlertAction *const cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * _Nonnull action) {
         }];
         [passwordAlert addAction:cancelAction];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+        UIAlertAction *const okAction = [UIAlertAction actionWithTitle:@"OK"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
         }];

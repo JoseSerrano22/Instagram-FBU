@@ -9,15 +9,15 @@
 #import "DateTools.h"
 
 @interface DetailsViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *postImage;
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *const profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *const usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *const timestampLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *const postImage;
+@property (weak, nonatomic) IBOutlet UIButton *const favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *const commentButton;
+@property (weak, nonatomic) IBOutlet UILabel *const descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *const favoriteCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *const commentCountLabel;
 @end
 
 @implementation DetailsViewController
@@ -25,17 +25,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"%@",self.post);
-    PFUser *user = self.post.author;
+    PFUser *const user = self.post.author;
     
     self.usernameLabel.text = user.username;
     self.descriptionLabel.text = self.post.caption;
     
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
-    PFUser *postAuthor = self.post.author;
+    PFUser *const postAuthor = self.post.author;
     [postAuthor fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        PFFileObject *image = postAuthor[@"profile_image"];
-        NSURL *url = [NSURL URLWithString:image.url];
+        PFFileObject *const image = postAuthor[@"profile_image"];
+        NSURL *const url = [NSURL URLWithString:image.url];
         [self.profileImage setImageWithURL:url];
     }];
     
@@ -49,13 +49,13 @@
     self.commentCountLabel.text = [NSString stringWithFormat:@"%@", self.post.commentCount];
     self.favoriteButton.selected = [self.post.likedByUsername containsObject:PFUser.currentUser.objectId];
     
-    NSString *createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", self.post.createdAt];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSString *const createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", self.post.createdAt];
+    NSDateFormatter *const formatter = [[NSDateFormatter alloc] init];
     
     formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
     
-    NSDate *date = [formatter dateFromString:createdAtOriginalString];
-    NSDate *now = [NSDate date];
+    NSDate *const date = [formatter dateFromString:createdAtOriginalString];
+    NSDate *const now = [NSDate date];
     NSInteger timeApart = [now hoursFrom:date];
     
     if (timeApart >= 24) {

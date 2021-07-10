@@ -13,8 +13,8 @@
 #import "Post.h"
 
 @interface CaptureViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *postImage;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *const postImage;
+@property (weak, nonatomic) IBOutlet UITextView *const descriptionTextView;
 
 @end
 
@@ -25,7 +25,7 @@
     
     self.descriptionTextView.delegate = self;
     self.postImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(_tapImageGesture:)];
+    UITapGestureRecognizer *const tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(_tapImageGesture:)];
     tapGesture1.numberOfTapsRequired = 1;
     [self.postImage addGestureRecognizer:tapGesture1];
 }
@@ -36,20 +36,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)_postDidTap:(id)sender {
-    UIImage *resizeImage = [self _resizeImage:self.postImage.image withSize:CGSizeMake(400, 400)];
+    UIImage *const resizeImage = [self _resizeImage:self.postImage.image withSize:CGSizeMake(400, 400)];
     [Post postUserImage: resizeImage withCaption:self.descriptionTextView.text withCompletion:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (UIImage *)_resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    UIImageView *const resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
     resizeImageView.image = image;
     
     UIGraphicsBeginImageContext(size);
     [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *const newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     return newImage;
@@ -57,14 +57,14 @@
 
 - (void)_tapImageGesture: (id)sender {
     
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    UIImagePickerController *const imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
     
-    UIAlertController *usernameAlert = [UIAlertController alertControllerWithTitle:@"Choose"
+    UIAlertController *const usernameAlert = [UIAlertController alertControllerWithTitle:@"Choose"
                                                                            message:@""
                                                                     preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *takePhotoAction = [UIAlertAction actionWithTitle:@"Take Photo"
+    UIAlertAction *const takePhotoAction = [UIAlertAction actionWithTitle:@"Take Photo"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
         
@@ -79,7 +79,7 @@
     }];
     [usernameAlert addAction:takePhotoAction];
     
-    UIAlertAction *cameraRollAction = [UIAlertAction actionWithTitle:@"Camera Roll"
+    UIAlertAction *const cameraRollAction = [UIAlertAction actionWithTitle:@"Camera Roll"
                                                                style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * _Nonnull action) {
         
@@ -96,7 +96,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    UIImage *const editedImage = info[UIImagePickerControllerEditedImage];
     self.postImage.image = editedImage;
     [self dismissViewControllerAnimated:YES completion:nil];
 }

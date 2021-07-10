@@ -14,10 +14,10 @@
     
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.clipsToBounds = YES;
-    PFUser *postAuthor = self.post.author;
+    PFUser *const postAuthor = self.post.author;
     [postAuthor fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        PFFileObject *image = postAuthor[@"profile_image"];
-        NSURL *url = [NSURL URLWithString:image.url];
+        PFFileObject *const image = postAuthor[@"profile_image"];
+        NSURL *const url = [NSURL URLWithString:image.url];
         [self.profileImage setImageWithURL:url];
     }];
 
@@ -34,13 +34,13 @@
     self.commentCountLabel.text = [NSString stringWithFormat:@"%@", self.post.commentCount];
     self.favoriteButton.selected = [self.post.likedByUsername containsObject:PFUser.currentUser.objectId];
     
-    NSString *createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSString *const createdAtOriginalString = self.timestampLabel.text = [NSString stringWithFormat:@"%@", post.createdAt];
+    NSDateFormatter *const formatter = [[NSDateFormatter alloc] init];
 
     formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss z";
 
-    NSDate *date = [formatter dateFromString:createdAtOriginalString];
-    NSDate *now = [NSDate date];
+    NSDate *const date = [formatter dateFromString:createdAtOriginalString];
+    NSDate *const now = [NSDate date];
     NSInteger timeApart = [now hoursFrom:date];
     
     if (timeApart >= 24) {

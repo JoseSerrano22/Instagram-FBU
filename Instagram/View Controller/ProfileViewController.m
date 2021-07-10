@@ -14,13 +14,13 @@
 
 @interface ProfileViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (strong, nonatomic) NSMutableArray *posts;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfPostLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bioLabel;
+@property (strong, nonatomic) NSMutableArray *const posts;
+@property (nonatomic, strong) UIRefreshControl *const refreshControl;
+@property (weak, nonatomic) IBOutlet UICollectionView *const collectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *const profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *const usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *const numberOfPostLabel;
+@property (weak, nonatomic) IBOutlet UILabel *const bioLabel;
 
 @end
 
@@ -33,11 +33,11 @@
     
     [self _fetchPosts];
     
-    PFUser *currentUser = PFUser.currentUser;
+    PFUser *const currentUser = PFUser.currentUser;
     [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         self.usernameLabel.text = [currentUser username];
-        PFFileObject *image = currentUser[@"profile_image"];
-        NSURL *url = [NSURL URLWithString:image.url];
+        PFFileObject *const image = currentUser[@"profile_image"];
+        NSURL *const url = [NSURL URLWithString:image.url];
         [self.profileImage setImageWithURL:url];
         self.usernameLabel.text = [currentUser username];
         self.bioLabel.text = currentUser[@"bio"];
@@ -54,7 +54,7 @@
 
 - (void)_fetchPosts {
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    PFQuery *const query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
     [query whereKey:@"author" equalTo:[PFUser currentUser]];
@@ -65,14 +65,14 @@
             self.posts = (NSMutableArray *) posts;
             NSLog(@"Posts assigned to array");
             
-            NSInteger numOfPost = self.posts.count;
+            const NSInteger numOfPost = self.posts.count;
             self.numberOfPostLabel.text = [NSString stringWithFormat:@"%ld", (long)numOfPost];
             
-            PFUser *currentUser = PFUser.currentUser;
+            PFUser *const currentUser = PFUser.currentUser;
             [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                 self.usernameLabel.text = [currentUser username];
-                PFFileObject *image = currentUser[@"profile_image"];
-                NSURL *url = [NSURL URLWithString:image.url];
+                PFFileObject *const image = currentUser[@"profile_image"];
+                NSURL *const url = [NSURL URLWithString:image.url];
                 [self.profileImage setImageWithURL:url];
                 self.usernameLabel.text = [currentUser username];
                 self.bioLabel.text = currentUser[@"bio"];
@@ -91,7 +91,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    PostCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionCell" forIndexPath:indexPath];
+    PostCollectionCell *const cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionCell" forIndexPath:indexPath];
     cell.post = self.posts[indexPath.item];
     
     return cell;

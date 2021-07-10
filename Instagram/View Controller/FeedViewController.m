@@ -15,9 +15,9 @@
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *posts;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) NSMutableArray *const posts;
+@property (weak, nonatomic) IBOutlet UITableView *const tableView;
+@property (nonatomic, strong) UIRefreshControl *const refreshControl;
 @property (nonatomic) BOOL isMoreDataLoading;
 @property (nonatomic) int skipCount;
 @end
@@ -43,15 +43,15 @@
 - (IBAction)_logOutDidTap:(id)sender {
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        UIStoryboard *const storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginViewController *const loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [[UIApplication sharedApplication].keyWindow setRootViewController: loginViewController];
         NSLog(@"Logged out!");
     }];
 }
 
 - (void)_fetchPosts {
-    PFQuery *postQuery = [Post query];
+    PFQuery *const postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
     [postQuery includeKey:@"author"];
     postQuery.limit = 20;
@@ -69,7 +69,7 @@
 }
 
 - (void)_loadMoreData {
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    PFQuery *const query = [PFQuery queryWithClassName:@"Post"];
     
     query.limit = 20 * self.skipCount;
     [query orderByDescending:@"createdAt"];
@@ -111,8 +111,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
-    Post *post = self.posts[indexPath.row];
+    PostCell *const cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
+    Post *const post = self.posts[indexPath.row];
     cell.post = post;
     return cell;
 }
@@ -126,11 +126,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"detailsSegue"]){
-        PostCell *tappedCell = sender;
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-        Post *post = self.posts[indexPath.row];
-        UINavigationController *nav = [segue destinationViewController];
-        DetailsViewController *detailsViewController = (DetailsViewController *)[nav topViewController];
+        PostCell *const tappedCell = sender;
+        NSIndexPath *const indexPath = [self.tableView indexPathForCell:tappedCell];
+        Post *const post = self.posts[indexPath.row];
+        UINavigationController *const nav = [segue destinationViewController];
+        DetailsViewController *const detailsViewController = (DetailsViewController *)[nav topViewController];
         detailsViewController.post = post;
     }
 }
