@@ -306,7 +306,7 @@
                                                     </state>
                                                     <state key="selected" image="heart.fill" catalog="system"/>
                                                     <connections>
-                                                        <action selector="didTapFavorite:" destination="zvF-Uo-6pc" eventType="touchUpInside" id="sAB-NJ-Q05"/>
+                                                        <action selector="_didTapFavorite:" destination="zvF-Uo-6pc" eventType="touchUpInside" id="sAB-NJ-Q05"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmw-jD-YK0">
